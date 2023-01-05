@@ -15,11 +15,17 @@
         </q-chip>
       </div>
 
-      <div :v-if="release" class="absolute-bottom-right" style="padding: 5px;">
+      <div v-if="progress != null" class="absolute-bottom-left transparent" style="padding: 0;">
+        <q-chip dense square color="blue-grey-7" size="13px" text-color="white" icon="bookmark">
+          {{progress}}
+        </q-chip>
+      </div>
+
+      <div v-if="release" class="absolute-bottom-right" style="padding: 5px;">
         {{release}}
       </div>
     </q-img>
-  </router-link>   
+  </router-link>
 </template>
 
 <script>
@@ -31,7 +37,11 @@ export default {
       type: Number,
       required: true
     },
-    
+
+    userProgress: {
+      required: true,
+    },
+
     nsfw: {
       type: Boolean,
       default: true
@@ -53,6 +63,23 @@ export default {
       // 从 LocalStorage 中读取 token
       const token = this.$q.localStorage.getItem('jwt-token') || ''
       return this.workid ? `/api/cover/${this.workid}?token=${token}` : ""
+    },
+
+    progress () {
+      switch (this.userProgress){
+        case "marked":
+          return "想听"
+        case "listening":
+          return "在听"
+        case "listened":
+          return "听过"
+        case "replay":
+          return "重听"
+        case "postponed":
+          return "搁置"
+        default:
+          return null
+      }
     },
 
     rjcode () {

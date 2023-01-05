@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <router-link :to="`/work/${metadata.id}`">
-      <CoverSFW :workid="metadata.id" :nsfw="false" :release="metadata.release" />
+      <CoverSFW :workid="metadata.id" :nsfw="false" :release="metadata.release" :userProgress="metadata.userProgress" />
     </router-link>
 
     <q-separator />
