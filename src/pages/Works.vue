@@ -107,6 +107,7 @@ import WorkCard from 'components/WorkCard'
 import WorkListItem from 'components/WorkListItem'
 import NotifyMixin from '../mixins/Notification.js'
 import RecentList from 'components/RecentList'
+import {EventBus} from '../utils/EventBus.js'
 
 export default {
   name: 'Works',
@@ -233,6 +234,18 @@ export default {
     if (localStorage.detailMode) {
       this.detailMode = (localStorage.detailMode === 'true');
     }
+    EventBus.$on("setProgress", (id, newProgress) => {
+      for (let i in this.works){
+        if(id === this.works[i].id){
+          this.works[i].userProgress = newProgress;
+          break;
+        }
+      }
+    })
+  },
+
+  beforeDestroy() {
+    EventBus.$off("setProgress")
   },
 
   computed: {
@@ -255,11 +268,11 @@ export default {
   // keep-alive hooks
   // <keep-alive /> is set in MainLayout
   activated () {
-    this.stopLoad = false
+    // this.reset()
   },
 
   deactivated () {
-    this.stopLoad = true
+    // this.stopLoad = true
   },
 
   watch: {

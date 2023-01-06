@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link :to="`/work/${metadata.id}`">
-      <CoverSFW :workid="metadata.id" :nsfw="false" :release="metadata.release" />
+      <CoverSFW :workid="metadata.id" :nsfw="false" :release="metadata.release" :userProgress="metadata.progress" />
     </router-link>
 
     <div class="q-pa-sm">
@@ -66,7 +66,12 @@
 
           <!-- DLsite链接 -->
           <div class="col-auto">
-            <q-icon name="launch" size="xs" /><a class="text-blue" :href="`https://www.dlsite.com/home/work/=/product_id/RJ${String(metadata.id).padStart(6,'0')}.html`" rel="noreferrer noopener" target="_blank">DLsite</a>
+            <div v-if="metadata.id >= 1000000">
+              <q-icon name="launch" size="xs" /><a class="text-blue" :href="`https://www.dlsite.com/home/work/=/product_id/RJ${String(metadata.id).padStart(8,'0')}.html`" rel="noreferrer noopener" target="_blank">DLsite</a>
+            </div>
+            <div v-else>
+              <q-icon name="launch" size="xs" /><a class="text-blue" :href="`https://www.dlsite.com/home/work/=/product_id/RJ${String(metadata.id).padStart(6,'0')}.html`" rel="noreferrer noopener" target="_blank">DLsite</a>
+            </div>
           </div>
         </div>
       </div>
@@ -164,6 +169,7 @@
 import CoverSFW from 'components/CoverSFW'
 import WriteReview from './WriteReview'
 import NotifyMixin from '../mixins/Notification.js'
+import {EventBus} from '../utils/EventBus.js'
 
 export default {
   name: 'WorkDetails',
@@ -229,6 +235,7 @@ export default {
         'progress': newProgress
       };
       this.submitProgress(submitPayload);
+      EventBus.$emit("setProgress", this.metadata.id, newProgress);
     },
 
     submitProgress (payload) {

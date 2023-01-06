@@ -16,7 +16,7 @@
       </div>
 
       <div v-if="progress != null" class="absolute-bottom-left transparent" style="padding: 0;">
-        <q-chip dense square color="blue-grey-7" size="13px" text-color="white" icon="bookmark">
+        <q-chip dense square :color="progressColor" size="13px" text-color="white" icon="bookmark">
           {{progress}}
         </q-chip>
       </div>
@@ -82,8 +82,30 @@ export default {
       }
     },
 
+    progressColor () {
+      switch (this.userProgress){
+        case "marked":
+          return "green-6"
+        case "listening":
+          return "orange-9"
+        case "listened":
+          return "purple-9"
+        case "replay":
+          return "amber-9"
+        case "postponed":
+          return "blue-grey-9"
+        default:
+          return null
+      }
+    },
+
     rjcode () {
-      return (`000000${this.workid}`).slice(-6)
+      if (this.workid >= 1000000)
+      {
+        return (`00000000${this.workid}`).slice(-8)
+      } else {
+        return (`000000${this.workid}`).slice(-6)
+      }
     },
 
     imgClass () {
