@@ -14,12 +14,17 @@
         </router-link>
       </div>
 
-      <!-- 社团 -->
+      <!-- 社团/系列 -->
       <div class="q-ml-sm q-mt-sm q-mb-xs text-subtitle1 text-weight-regular ellipsis">
         <router-link :to="`/works?circleId=${metadata.circle.id}`" class="text-grey">
           {{ metadata.circle.name }}
         </router-link>
+        <span v-if="metadata.series.id && metadata.series.id !== 0" class="text-grey">/</span>
+        <router-link :to="`/works?seriesId=${metadata.series.id}`" class="text-grey">
+          {{ metadata.series.name }}
+        </router-link>
       </div>
+
 
       <!-- 评价&评论 -->
       <div v-show="metadata.title" class="row items-center">

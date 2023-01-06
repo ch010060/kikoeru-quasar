@@ -259,6 +259,8 @@ export default {
         return `/api/vas/${this.$route.query.vaId}/works`
       } else if (query.keyword) {
         return `/api/search/${query.keyword}`
+      } else if (query.seriesId) {
+        return `/api/series/${this.$route.query.seriesId}/works`
       } else {
         return '/api/works'
       }
@@ -337,7 +339,7 @@ export default {
     },
 
     refreshPageTitle () {
-      if (this.$route.query.circleId || this.$route.query.tagId || this.$route.query.vaId) {
+      if (this.$route.query.circleId || this.$route.query.tagId || this.$route.query.vaId || this.$route.query.seriesId) {
         let url = '', restrict = ''
         if (this.$route.query.circleId) {
           restrict = 'circles'
@@ -345,9 +347,12 @@ export default {
         } else if (this.$route.query.tagId) {
           restrict = 'tags'
           url = `/api/${restrict}/${this.$route.query.tagId}`
-        } else {
+        } else if (this.$route.query.vaId){
           restrict = 'vas'
           url = `/api/${restrict}/${this.$route.query.vaId}`
+        } else {
+          restrict = 'series'
+          url = `/api/${restrict}/${this.$route.query.seriesId}`
         }
 
         this.$axios.get(url)
@@ -364,6 +369,9 @@ export default {
                 break
               case 'circles':
                 pageTitle = 'Works by '
+                break
+              case 'series':
+                pageTitle = 'Works in '
                 break
             }
             pageTitle += name || ''
