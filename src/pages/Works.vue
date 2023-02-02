@@ -144,79 +144,73 @@ export default {
       pagination: { currentPage:0, pageSize:12, totalCount:0 },
       seed: 7, // random sort
       sortOption: {
-        label: '按照发售日期新到老的顺序',
-        order: 'release',
+        label: '最新收錄',
+        order: 'insert_time',
         sort: 'desc'
       },
       options: [
         {
-          label: '按照发售日期新到老的顺序',
+          label: '最新收錄',
+          order: 'insert_time',
+          sort: 'desc'
+        },
+        {
+          label: '發售日新到舊',
           order: 'release',
           sort: 'desc'
         },
         {
-          label: '按照加入数据库日期新到老的顺序',
-          order: 'insert_time',
-          sort: 'desc'
-        },
-
-        {
-          label: '按照我的评价排序',
-          order: 'rating',
-          sort: 'desc'
-        },
-        {
-          label: '按照发售日期老到新的顺序',
+          label: '發售日舊到新',
           order: 'release',
           sort: 'asc'
         },
         {
-          label: '按照加入数据库日期老到新的顺序',
-          order: 'insert_time',
-          sort: 'asc'
-        },
-        {
-          label: '按照售出数量多到少的顺序',
-          order: 'dl_count',
+          label: 'RJ號大到小',
+          order: 'id',
           sort: 'desc'
         },
         {
-          label: '按照价格便宜到贵的顺序',
-          order: 'price',
+          label: 'RJ號小到大',
+          order: 'id',
           sort: 'asc'
         },
         {
-          label: '按照价格贵到便宜的顺序',
+          label: '價格貴到便宜',
           order: 'price',
           sort: 'desc'
         },
         {
-          label: '按照评价高到低的顺序',
+          label: '價格便宜到貴',
+          order: 'price',
+          sort: 'asc'
+        },
+        {
+          label: '評價高到低',
           order: 'rate_average_2dp',
           sort: 'desc'
         },
         {
-          label: '按照评论多到少的顺序',
+          label: '評論多到少',
           order: 'review_count',
           sort: 'desc'
         },
         {
-          label: '按照RJ号大到小的顺序',
-          order: 'id',
+          label: '售出數多到少',
+          order: 'dl_count',
           sort: 'desc'
         },
         {
-          label: '按照RJ号小到大的顺序',
-          order: 'id',
-          sort: 'asc'
+          label: '我的評價排序',
+          order: 'rating',
+          sort: 'desc'
         },
         {
-          label: '按照全年龄新作优先的顺序',
+          label: '全年齡新作優先',
           order: 'nsfw',
           sort: 'asc'
         },
         {
-          label: '随机排序',
+          label: '隨機排序',
           order: 'random',
           sort: 'desc'
         }
