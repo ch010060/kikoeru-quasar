@@ -19,7 +19,7 @@
       :width="200"
       :breakpoint="500"
       bordered
-      content-class="bg-grey-3"
+      :class="`${!this.$q.dark.isActive && 'bg-grey-3'}`"
     >
       <div class="column justify-between fit">
         <q-list padding class="col-auto">
@@ -53,11 +53,12 @@
 
 <script>
 import NotifyMixin from '../mixins/Notification.js'
+import DarkMode from '../mixins/DarkMode'
 
 export default {
   name: 'DashboardLayout',
 
-  mixins: [NotifyMixin],
+  mixins: [NotifyMixin,DarkMode],
 
   data () {
     return {

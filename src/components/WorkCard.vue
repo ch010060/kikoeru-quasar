@@ -95,7 +95,7 @@
           :to="`/works?tagId=${tag.id}`"
           :key=index
         >
-          <q-chip size="md" class="shadow-2">
+          <q-chip size="md" class="shadow-2" :class="$q.dark.isActive ? 'bg-grey-9' : ''">
             {{ tag.name }}
           </q-chip>
         </router-link>
@@ -121,11 +121,12 @@
 // import WorkDetails from 'components/WorkDetails'
 import CoverSFW from 'components/CoverSFW'
 import NotifyMixin from '../mixins/Notification.js'
+import DarkMode from '../mixins/DarkMode'
 
 export default {
   name: 'WorkCard',
 
-  mixins: [NotifyMixin],
+  mixins: [NotifyMixin,DarkMode],
 
   components: {
     CoverSFW
