@@ -57,6 +57,10 @@
                 <q-item-section>下一曲播放</q-item-section>
               </q-item>
 
+              <q-item clickable @click="openFile(item)" v-if="item.title.includes('mp4')">
+                <q-item-section>直接播放</q-item-section>
+              </q-item>
+
               <q-item clickable @click="download(item)">
                 <q-item-section>下载文件</q-item-section>
               </q-item>
