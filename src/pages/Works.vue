@@ -10,14 +10,14 @@
     </div>
 
     <div :class="`row justify-center ${listMode ? 'list' : 'q-mx-md'}`">
-      <q-infinite-scroll @load="onLoad" :offset="250" :disable="stopLoad" style="max-width: 1680px;" class="col">
+      <q-infinite-scroll @load="onLoad" :offset="250" :disable="stopLoad" class="col">
         <div v-show="works.length" class="row justify-between q-mb-md q-mr-sm">
           <!-- 排序选择框 -->
           <q-select
             dense
             rounded
             outlined
-            bg-color="white"
+            :bg-color="color"
             transition-show="scale"
             transition-hide="scale"
             v-model="sortOption"
@@ -85,18 +85,29 @@
         </q-list>
 
         <div v-else class="row q-col-gutter-x-md q-col-gutter-y-lg">
-          <div class="col-xs-12 col-sm-6 col-md-4" :class="detailMode ? 'col-lg-3 col-xl-3': 'col-lg-2 col-xl-2'" v-for="work in works" :key="work.id">
+          <div class="col-xs-12 col-sm-4 col-md-3" :class="detailMode ? 'col-lg-2 col-xl-2': 'col-lg-2 col-xl-2'" v-for="work in works" :key="work.id">
             <WorkCard :metadata="work" :thumbnailMode="!detailMode" class="fit"/>
           </div>
         </div>
 
         <div v-show="stopLoad" class="q-mt-lg q-mb-xl text-h6 text-bold text-center">END</div>
 
-        <template v-slot:loading>
-          <div class="row justify-center q-my-md">
-            <q-spinner-dots color="primary" size="40px" />
-          </div>
-        </template>
+        <!-- loading -->
+        <div class="row justify-center q-my-md" v-show="loading">
+          <q-spinner-dots color="primary" size="40px"/>
+        </div>
+
+        <!-- 分页 -->
+        <div class="q-py-lg flex flex-center">
+          <Pagination
+            show-quick-jumper
+            :class="this.$q.dark.isActive ? 'dark' : ''"
+            v-model="page"
+            :pageSize="pagination.pageSize"
+            :total="pagination.totalCount"
+            :itemRender="paginationItemRender"
+          />
+        </div>
       </q-infinite-scroll>
     </div>
   </div>
@@ -108,11 +119,12 @@ import WorkListItem from 'components/WorkListItem'
 import NotifyMixin from '../mixins/Notification.js'
 import RecentList from 'components/RecentList'
 import {EventBus} from '../utils/EventBus.js'
+import DarkMode from '../mixins/DarkMode'
 
 export default {
   name: 'Works',
 
-  mixins: [NotifyMixin],
+  mixins: [NotifyMixin,DarkMode],
 
   components: {
     WorkCard,
@@ -408,18 +420,68 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  .list {
-    // 宽度 >= $breakpoint-sm-min
-    @media (min-width: $breakpoint-sm-min) {
-      padding: 0px 20px;
-    }
+<style lang="scss">
+.list {
+  // 宽度 >= $breakpoint-sm-min
+  @media (min-width: $breakpoint-sm-min) {
+    padding: 0px 20px;
   }
-
-  .work-card {
-    // 宽度 > $breakpoint-xl-min
-    @media (min-width: $breakpoint-md-min) {
-      width: 560px;
-    }
+}
+.work-card {
+  // 宽度 > $breakpoint-xl-min
+  @media (min-width: $breakpoint-md-min) {
+    width: 560px;
   }
+}
+.dark .ant-pagination-item-link,
+.dark .ant-pagination-options-quick-jumper {
+  color: #fff !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+.dark .ant-pagination-item {
+  //border: none !important;
+  background-color: transparent !important;
+}
+.dark .ant-pagination-item a {
+  color: #fff !important;
+}
+.dark .ant-pagination-item-ellipsis {
+  color: #fff !important;
+}
+.dark .ant-pagination-options-quick-jumper input {
+  background-color: transparent !important;
+  color: white;
+}
+.ant-pagination-item ,
+.ant-pagination-jump-next,
+.ant-pagination-jump-prev,
+.ant-pagination-next,
+.ant-pagination-prev {
+  @media (max-width: $breakpoint-xs-max) {
+    // compact mode
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    //height: 28px;
+    //line-height: 28px;
+    //min-width: 28px;
+    //border: none !important;
+  }
+}
+body {
+  // side effect of antd
+  color: black !important;
+}
+body.body--dark {
+  // side effect of antd
+  color: #fff !important;
+}
+.ant-pagination-options {
+  @media (max-width: 576px) {
+    display: block !important;
+    text-align: center !important;
+    margin-top: 2px !important;
+  }
+}
 </style>
