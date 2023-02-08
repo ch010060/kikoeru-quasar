@@ -85,7 +85,11 @@
       <div v-show="metadata.title">
         <span class="q-mx-sm text-weight-medium text-h6 text-red">{{ metadata.price }} 日元</span>
         <span>售出数: {{ metadata.dl_count }}</span>
-        <span v-if="!metadata.nsfw" class="q-mx-sm" style="background: #e6f7d6; color: #56842a">全年龄</span>
+        <span v-if="!metadata.nsfw" class="q-mx-sm" style="background: #ffb6c1; color: #56842a">🏷️全年龄</span>
+        <div v-for="(tag, index) in metadata.tags" :key=index>
+          <span v-if="tag.name === '中文字幕'" class="q-mx-sm" style="background: #7fff00; color: #56842a">🏷️中文字幕</span>
+          <span v-if="tag.name === '中文影片'" class="q-mx-sm" style="background: #00ffff; color: #56842a">🏷️中文影片</span>
+        </div>
       </div>
 
       <!-- 标签 -->
