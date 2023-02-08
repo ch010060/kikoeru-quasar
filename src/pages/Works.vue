@@ -26,6 +26,8 @@
             class="col-auto"
           />
 
+          <q-checkbox v-model="subtitleOnly" label="带字幕" class="row" @input="subtitleFilter()"></q-checkbox>
+
           <!-- 切换显示模式按钮 -->
           <q-btn-toggle
             dense
@@ -143,6 +145,7 @@ export default {
       page: 1,
       pagination: { currentPage:0, pageSize:12, totalCount:0 },
       seed: 7, // random sort
+      subtitleOnly: false,
       sortOption: {
         label: '最新收錄',
         order: 'insert_time',
@@ -234,6 +237,9 @@ export default {
     if (localStorage.showLabel) {
       this.showLabel = (localStorage.showLabel === 'true');
     }
+    if (localStorage.subtitleOnly) {
+      this.subtitleOnly = (localStorage.subtitleOnly === 'true');
+    }
     if (localStorage.listMode) {
       this.listMode = (localStorage.listMode === 'true');
     }
@@ -294,6 +300,10 @@ export default {
       this.reset();
     },
 
+    subtitleOnly (newSubtitleOnly) {
+      localStorage.subtitleOnly = newSubtitleOnly;
+    },
+
     showLabel (newLabelSetting) {
       localStorage.showLabel = newLabelSetting;
     },
@@ -318,7 +328,8 @@ export default {
         order: this.sortOption.order,
         sort: this.sortOption.sort,
         page: this.pagination.currentPage + 1 || 1,
-        seed: this.seed
+        seed: this.seed,
+        subtitle: this.subtitleOnly ? 1 : 0
       }
 
       return this.$axios.get(this.url, { params })
@@ -409,6 +420,15 @@ export default {
         .then(() => {
           this.stopLoad = false
         })
+    },
+
+    subtitleFilter () {
+        if (this.subtitleOnly) {
+            window.location.href = '/works?tagId=-1'
+        }
+        else{
+            window.location.href = '/works'
+        }
     },
   }
 }
