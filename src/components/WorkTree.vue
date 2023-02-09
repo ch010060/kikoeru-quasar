@@ -74,6 +74,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import {isPrerender} from "src/utils/prerender";
 
 export default {
   name: 'WorkTree',
@@ -93,7 +94,11 @@ export default {
 
   watch: {
     tree () {
-      this.initPath()
+      this.prefetchAudioUrls()
+
+      if (this.currentFolder.length === 0) {
+        this.path = this.initPath()
+      }
     }
   },
 
@@ -232,6 +237,13 @@ export default {
       resetPlaying: true
       // 开始播放
       })
+    },
+
+    prefetchAudioUrls () {
+      // ua prerender 不要预加载
+      if (isPrerender()) {
+        return
+      }
     }
   }
 }

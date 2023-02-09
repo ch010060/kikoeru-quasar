@@ -87,6 +87,7 @@ import NotifyMixin from '../mixins/Notification.js'
 import RecentList from 'components/RecentList'
 import {EventBus} from '../utils/EventBus.js'
 import DarkMode from '../mixins/DarkMode'
+import {isPrerender} from "src/utils/prerender";
 
 export default {
   name: 'Works',
@@ -101,7 +102,7 @@ export default {
 
   data () {
     return {
-      displayMode: 'detail',
+      displayMode: isPrerender() ? 'thumbnail' : 'detail',
       showLabel: true,
       detailMode: true,
       stopLoad: false,
