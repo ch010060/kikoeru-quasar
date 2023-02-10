@@ -161,7 +161,7 @@
           <router-view />
         </keep-alive>
       <!-- </q-page> -->
-        <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+        <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]" id="gotop" ref="gotop">
           <q-btn fab icon="keyboard_arrow_up" color="accent" />
         </q-page-scroller>
     </q-page-container>

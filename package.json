@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.10.4",
+    "ant-design-vue": "^1.7.8",
     "axios": "^0.21.1",
     "lrc-file-parser": "^1.0.7",
     "plyr": "^3.6.7",

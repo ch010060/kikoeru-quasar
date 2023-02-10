@@ -60,6 +60,10 @@ module.exports = function (ctx) {
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
     supportIE: false,
 
+    vendor: {
+      remove: ['@ant-design/icons', '@ant-design/icons/lib/dist/svg', '@ant-design/icons/lib/dist/font'],
+    },
+
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
